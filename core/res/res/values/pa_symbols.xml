@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2014-2020 Paranoid Android
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<resources>
+
+    <!-- Package Manager -->
+    <java-symbol type="array" name="config_disabledComponents" />
+    <java-symbol type="array" name="config_forceEnabledComponents" />
+
+    <!-- Alert slider. -->
+    <java-symbol type="string" name="alert_slider_state_path" />
+    <java-symbol type="string" name="alert_slider_uevent_match_path" />
+    <java-symbol type="bool" name="config_hasAlertSlider" />
+    <java-symbol type="integer" name="config_alertSliderLocation" />
+
+    <!-- Device keyhandlers -->
+    <java-symbol type="array" name="config_deviceKeyHandlerLibs" />
+    <java-symbol type="array" name="config_deviceKeyHandlerClasses" />
+
+    <!-- Gestures Settings -->
+    <java-symbol type="integer" name="config_doubleTapKeyCode" />
+    <java-symbol type="integer" name="config_singleTapKeyCode" />
+    <java-symbol type="integer" name="config_drawVKeyCode" />
+    <java-symbol type="integer" name="config_drawInverseVKeyCode" />
+    <java-symbol type="integer" name="config_drawOKeyCode" />
+    <java-symbol type="integer" name="config_drawMKeyCode" />
+    <java-symbol type="integer" name="config_drawWKeyCode" />
+    <java-symbol type="integer" name="config_drawSKeyCode" />
+    <java-symbol type="integer" name="config_drawArrowLeftKeyCode" />
+    <java-symbol type="integer" name="config_drawArrowRightKeyCode" />
+    <java-symbol type="integer" name="config_oneFingerSwipeUpKeyCode" />
+    <java-symbol type="integer" name="config_oneFingerSwipeRightKeyCode" />
+    <java-symbol type="integer" name="config_oneFingerSwipeDownKeyCode" />
+    <java-symbol type="integer" name="config_oneFingerSwipeLeftKeyCode" />
+    <java-symbol type="integer" name="config_twoFingerSwipeKeyCode" />
+
+    <java-symbol type="integer" name="config_doubleTapDefault" />
+    <java-symbol type="integer" name="config_singleTapDefault" />
+    <java-symbol type="integer" name="config_drawVDefault" />
+    <java-symbol type="integer" name="config_drawInverseVDefault" />
+    <java-symbol type="integer" name="config_drawODefault" />
+    <java-symbol type="integer" name="config_drawMDefault" />
+    <java-symbol type="integer" name="config_drawWDefault" />
+    <java-symbol type="integer" name="config_drawSDefault" />
+    <java-symbol type="integer" name="config_drawArrowLeftDefault" />
+    <java-symbol type="integer" name="config_drawArrowRightDefault" />
+    <java-symbol type="integer" name="config_oneFingerSwipeUpDefault" />
+    <java-symbol type="integer" name="config_oneFingerSwipeRightDefault" />
+    <java-symbol type="integer" name="config_oneFingerSwipeDownDefault" />
+    <java-symbol type="integer" name="config_oneFingerSwipeLeftDefault" />
+    <java-symbol type="integer" name="config_twoFingerSwipeDefault" />
+
+    <!-- Whether to to intercept inputs on screen off. -->
+    <java-symbol type="bool" name="config_enableKeyHandler" />
+
+    <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
+    <java-symbol type="bool" name="config_cleanupUnusedFingerprints" />
+
+    <!-- Post reset runnable for all clients -->
+    <java-symbol type="bool" name="config_fingerprintPostResetRunnableForAllClients" />
+
+    <!-- Extended Power Menu -->
+    <java-symbol type="array" name="config_extendedGlobalActionsList" />
+    <java-symbol type="drawable" name="ic_restart_quick" />
+    <java-symbol type="drawable" name="ic_restart_recovery" />
+    <java-symbol type="drawable" name="ic_restart_bootloader" />
+    <!-- Defined in res/res/values/symbols.xml -
+    <java-symbol type="string" name="global_action_restart" />-->
+    <java-symbol type="string" name="global_action_quick_restart" />
+    <java-symbol type="string" name="global_action_recovery" />
+    <java-symbol type="string" name="global_action_bootloader" />
+    <!-- Shutdown Thread -->
+    <java-symbol type="string" name="global_restart" />
+    <java-symbol type="string" name="global_restart_message" />
+    <java-symbol type="string" name="global_quick_restart" />
+    <java-symbol type="string" name="global_restart_recovery" />
+    <java-symbol type="string" name="global_restart_recovery_message" />
+    <java-symbol type="string" name="global_restart_bootloader" />
+    <java-symbol type="string" name="global_restart_bootloader_message" />
+
+    <!-- Whether to show WiFi/Hotspot generation number -->
+    <java-symbol type="bool" name="config_show_network_generation" />
+
+    <java-symbol type="array" name="config_vendorPlatformSignatures" />
+    <java-symbol type="bool" name="config_hasOnePlusHapticMotor" />
+
+    <!-- Pocket Lock -->
+    <java-symbol type="layout" name="pocket_lock_view_layout" />
+    <java-symbol type="id" name="pocket_hint_container" />
+    <java-symbol type="id" name="pocket_hint_image" />
+    <java-symbol type="id" name="pocket_hint_message" />
+
+    <!-- Pocket bridge -->
+    <java-symbol type="string" name="config_pocketBridgeSysfsInpocket" />
+
+    <!-- Whether the device has a popup camera -->
+    <java-symbol type="bool" name="config_hasPopupCamera" />
+
+    <java-symbol type="string" name="popup_camera_dialog_message" />
+    <java-symbol type="string" name="popup_camera_dialog_no" />
+    <java-symbol type="string" name="popup_camera_dialog_raise" />
+
+    <!-- Horizon Light -->
+    <java-symbol type="integer" name="config_AmbientPulseLightColor" />
+
+    <!-- Whether to allow process with media UID to access CameraServiceProxy -->
+    <java-symbol type="bool" name="config_allowMediaUidForCameraServiceProxy" />
+
+    <!-- Button backlight -->
+    <java-symbol type="integer" name="config_buttonBrightnessSettingDefault" />
+    <java-symbol type="bool" name="config_deviceHasVariableButtonBrightness" />
+
+</resources>
