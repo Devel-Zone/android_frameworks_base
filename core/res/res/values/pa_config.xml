@@ -168,4 +168,5 @@
 
     <!-- Whether device supports gestures on fingerprint sensor -->
     <bool name="config_supportsGesturesOnFingerprintSensor">false</bool>
+
 </resources>

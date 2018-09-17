@@ -249,6 +249,8 @@ import javax.inject.Named;
 
 import dagger.Subcomponent;
 
+import com.android.internal.util.aospa.NavbarUtils;
+
 public class StatusBar extends SystemUI implements DemoMode,
         ActivityStarter, OnUnlockMethodChangedListener,
         OnHeadsUpChangedListener, CommandQueue.Callbacks, ZenModeController.Callback,
@@ -657,6 +659,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         mUiModeManager = mContext.getSystemService(UiModeManager.class);
         mKeyguardViewMediator = getComponent(KeyguardViewMediator.class);
+        mNavigationBarSystemUiVisibility = mNavigationBarController.createSystemUiVisibility();
         mActivityIntentHelper = new ActivityIntentHelper(mContext);
         final KeyguardSliceProvider sliceProvider = KeyguardSliceProvider.getAttachedInstance();
         if (sliceProvider != null) {
@@ -718,6 +721,9 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
 
         createAndAddWindows(result);
+
+        mSbSettingsObserver.observe();
+        mSbSettingsObserver.update();
 
         if (mWallpaperSupported) {
             // Make sure we always have the most current wallpaper info.
@@ -1213,7 +1219,8 @@ public class StatusBar extends SystemUI implements DemoMode,
     // TODO(b/117478341): This was left such that CarStatusBar can override this method.
     // Try to remove this.
     protected void createNavigationBar(@Nullable RegisterStatusBarResult result) {
-        mNavigationBarController.createNavigationBars(true /* includeDefaultDisplay */, result);
+        mNavigationBarController.createNavigationBars(true /* includeDefaultDisplay */, result,
+                mNavigationBarSystemUiVisibility);
     }
 
     /**
@@ -2308,6 +2315,16 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (displayId != mDisplayId) {
             return;
         }
+
+        mNavigationBarSystemUiVisibility.displayId = displayId;
+        mNavigationBarSystemUiVisibility.vis = vis;
+        mNavigationBarSystemUiVisibility.fullscreenStackVis = fullscreenStackVis;
+        mNavigationBarSystemUiVisibility.dockedStackVis = dockedStackVis;
+        mNavigationBarSystemUiVisibility.mask = mask;
+        mNavigationBarSystemUiVisibility.fullscreenStackBounds = fullscreenStackBounds;
+        mNavigationBarSystemUiVisibility.dockedStackBounds = dockedStackBounds;
+        mNavigationBarSystemUiVisibility.navbarColorManagedByIme = navbarColorManagedByIme;
+
         final int oldVal = mSystemUiVisibility;
         final int newVal = (oldVal&~mask) | (vis&mask);
         final int diff = newVal ^ oldVal;
@@ -4476,6 +4493,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             Dependency.get(DeviceProvisionedController.class);
 
     protected NavigationBarController mNavigationBarController;
+    private NavigationBarController.SystemUiVisibility mNavigationBarSystemUiVisibility;
 
     // UI-specific methods
 
@@ -4825,6 +4843,50 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     public NotificationGutsManager getGutsManager() {
         return mGutsManager;
+    }
+
+    private SbSettingsObserver mSbSettingsObserver = new SbSettingsObserver(mHandler);
+    private class SbSettingsObserver extends ContentObserver {
+        SbSettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NAVIGATION_BAR_SHOW),
+                    false, this, UserHandle.USER_ALL);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.NAVIGATION_BAR_SHOW))) {
+                updateNavigationBar();
+            }
+        }
+
+        public void update() {
+        }
+    }
+
+    private void updateNavigationBar() {
+        if (mDisplayId == Display.DEFAULT_DISPLAY &&
+                mWindowManagerService != null) {
+            boolean navbarEnabled = NavbarUtils.isEnabled(mContext);
+            boolean hasNavbar = getNavigationBarView() != null;
+            if (navbarEnabled) {
+                if (!hasNavbar) {
+                    mNavigationBarController.onDisplayReady(mDisplayId,
+                            mNavigationBarSystemUiVisibility);
+                }
+            } else {
+                if (hasNavbar) {
+                    mNavigationBarController.onDisplayRemoved(mDisplayId);
+                }
+            }
+        }
     }
 
     @Subcomponent
